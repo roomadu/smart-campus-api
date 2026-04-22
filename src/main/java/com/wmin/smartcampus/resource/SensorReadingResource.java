@@ -50,7 +50,7 @@ public class SensorReadingResource {
             return Response.status(404).entity(err).type(MediaType.APPLICATION_JSON).build();
         }
 
-        // State constraint: block if sensor is in MAINTENANCE → 403 via mapper
+        // Block if sensor is in MAINTENANCE status (returns 403 Forbidden)
         if ("MAINTENANCE".equalsIgnoreCase(sensor.getStatus())) {
             throw new SensorUnavailableException(sensorId);
         }
