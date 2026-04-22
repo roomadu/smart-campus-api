@@ -46,7 +46,7 @@ public class SensorResource {
                     "roomId is required.", uriInfo.getPath());
             return Response.status(400).entity(err).type(MediaType.APPLICATION_JSON).build();
         }
-        // Dependency validation – roomId must exist → throws 422 via mapper
+        // Dependency validation: roomId must exist, otherwise throws 422
         if (!DataStore.roomExists(sensor.getRoomId())) {
             throw new LinkedResourceNotFoundException("Room", sensor.getRoomId());
         }
@@ -88,7 +88,7 @@ public class SensorResource {
     }
 
     // ---- Part 4.1: Sub-Resource Locator ------------------------------------
-    // Path: /sensors/{sensorId}/readings  → delegates to SensorReadingResource
+    // Path: /sensors/{sensorId}/readings  delegates to SensorReadingResource
     @Path("/{sensorId}/readings")
     public SensorReadingResource getReadingsResource(@PathParam("sensorId") String sensorId) {
         if (!DataStore.sensorExists(sensorId)) {
