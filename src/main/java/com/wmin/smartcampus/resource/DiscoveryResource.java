@@ -6,7 +6,7 @@ import java.util.*;
 
 /**
  * Part 1.2 – Discovery Endpoint
- * GET /api/v1  → returns API metadata including versioning, contact, and resource links.
+ * GET /api/v1  returns API metadata including versioning, contact, and resource links.
  */
 @Path("/")
 @Produces(MediaType.APPLICATION_JSON)
