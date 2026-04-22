@@ -64,7 +64,7 @@ public class SensorRoom {
                     "Room '" + roomId + "' does not exist.", uriInfo.getPath());
             return Response.status(404).entity(err).type(MediaType.APPLICATION_JSON).build();
         }
-        // Business constraint: block if sensors are still linked → 409 via mapper
+        // Business constraint: block deletion if sensors are still linked (returns 409)
         if (DataStore.roomHasSensors(roomId)) {
             throw new RoomNotEmptyException(roomId);
         }
