@@ -2,7 +2,7 @@ package com.wmin.smartcampus.exception;
 
 /**
  * Thrown when a POST reading is attempted on a sensor in MAINTENANCE status.
- * Mapped → HTTP 403 Forbidden
+ * Mapped to HTTP 403 Forbidden
  */
 public class SensorUnavailableException extends RuntimeException {
 
