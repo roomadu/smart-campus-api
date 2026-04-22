@@ -2,109 +2,137 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniPulse IoT | Smart Network</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <title>Smart Campus API</title>
 </head>
 <body>
-    <div class="app-container">
-        <aside>
-            <div class="logo">
-                <div class="logo-icon"><i data-lucide="waves"></i></div>
-                <h1 class="logo-text">UniPulse IoT</h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="nav-link active" data-view="overview"><i data-lucide="grid"></i> Monitoring</a></li>
-                    <li><a href="#" class="nav-link" data-view="rooms"><i data-lucide="map-pin"></i> Campus Map</a></li>
-                    <li><a href="#" class="nav-link" data-view="sensors"><i data-lucide="radio"></i> Sensors</a></li>
-                    <li><a href="#" class="nav-link" data-view="readings"><i data-lucide="history"></i> Telemetry</a></li>
-                </ul>
-            </nav>
-        </aside>
 
-        <main>
-            <header>
-                <div class="header-title">
-                    <h2 id="view-title">Monitoring</h2>
-                    <p id="view-subtitle">Live university sensor network telemetry</p>
-                </div>
-                <button class="btn btn-primary" onclick="refreshData()"><i data-lucide="refresh-cw"></i> Sync</button>
-            </header>
+<h1>Smart Campus Sensor and Room Management API</h1>
+<p>Module: 5COSC022W - Client-Server Architectures</p>
+<p>Base URL: <code>/api/v1</code></p>
 
-            <section id="overview-view" class="view-section active">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-header">Locations</div>
-                        <div class="stat-value" id="count-rooms">--</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header">IoT Devices</div>
-                        <div class="stat-value" id="count-sensors">--</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-header">Network Status</div>
-                        <div class="stat-value" style="color: var(--primary)">ONLINE</div>
-                    </div>
-                </div>
-                <div class="data-card">
-                    <div class="card-header"><h3>System Discovery</h3></div>
-                    <div id="discovery-info" style="font-family: monospace; color: #34d399; background: #020617; padding: 2rem; border-radius: 12px; border: 1px solid var(--border-color);">
-                        Scanning network...
-                    </div>
-                </div>
-            </section>
+<hr>
 
-            <!-- Sections for Rooms, Sensors, etc. follow same unique pattern -->
-            <section id="rooms-view" class="view-section">
-                <div class="data-card">
-                    <div class="card-header"><h3>Campus Locations</h3></div>
-                    <div id="rooms-list" class="rooms-grid"></div>
-                </div>
-            </section>
+<h2>Available Endpoints</h2>
 
-            <section id="sensors-view" class="view-section">
-                <div class="data-card">
-                    <div class="card-header"><h3>Active Sensor Inventory</h3></div>
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>DEVICE ID</th>
-                                    <th>TYPE</th>
-                                    <th>LOCATION</th>
-                                    <th>STATUS</th>
-                                    <th>CURRENT</th>
-                                    <th>LOGS</th>
-                                </tr>
-                            </thead>
-                            <tbody id="sensors-table-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
+<h3>Discovery</h3>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Method</th>
+        <th>URL</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td>/api/v1</td>
+        <td>API discovery - returns metadata and resource links</td>
+    </tr>
+</table>
 
-            <section id="readings-view" class="view-section">
-                <div class="data-card">
-                    <div class="card-header"><h3>Pulse Telemetry History</h3></div>
-                    <div class="table-wrapper">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>TIME</th>
-                                    <th>DEVICE</th>
-                                    <th>VALUE</th>
-                                    <th>UNIT</th>
-                                </tr>
-                            </thead>
-                            <tbody id="readings-table-body"></tbody>
-                        </table>
-                    </div>
-                </div>
-            </section>
-        </main>
-    </div>
-    <script src="app.js"></script>
+<h3>Rooms</h3>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Method</th>
+        <th>URL</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td>/api/v1/rooms</td>
+        <td>Get all rooms</td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td>/api/v1/rooms</td>
+        <td>Create a new room</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td>/api/v1/rooms/{roomId}</td>
+        <td>Get a specific room by ID</td>
+    </tr>
+    <tr>
+        <td>DELETE</td>
+        <td>/api/v1/rooms/{roomId}</td>
+        <td>Delete a room (blocked if sensors are still assigned)</td>
+    </tr>
+</table>
+
+<h3>Sensors</h3>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Method</th>
+        <th>URL</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td>/api/v1/sensors</td>
+        <td>Get all sensors (use ?type= to filter by type)</td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td>/api/v1/sensors</td>
+        <td>Register a new sensor (roomId must exist)</td>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td>/api/v1/sensors/{sensorId}</td>
+        <td>Get a specific sensor by ID</td>
+    </tr>
+    <tr>
+        <td>DELETE</td>
+        <td>/api/v1/sensors/{sensorId}</td>
+        <td>Remove a sensor</td>
+    </tr>
+</table>
+
+<h3>Sensor Readings</h3>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Method</th>
+        <th>URL</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>GET</td>
+        <td>/api/v1/sensors/{sensorId}/readings</td>
+        <td>Get all readings for a sensor</td>
+    </tr>
+    <tr>
+        <td>POST</td>
+        <td>/api/v1/sensors/{sensorId}/readings</td>
+        <td>Add a new reading (blocked if sensor is in MAINTENANCE)</td>
+    </tr>
+</table>
+
+<hr>
+
+<h2>Error Responses</h2>
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Status</th>
+        <th>Scenario</th>
+    </tr>
+    <tr>
+        <td>409 Conflict</td>
+        <td>Deleting a room that still has sensors assigned</td>
+    </tr>
+    <tr>
+        <td>422 Unprocessable Entity</td>
+        <td>Creating a sensor with a roomId that does not exist</td>
+    </tr>
+    <tr>
+        <td>403 Forbidden</td>
+        <td>Posting a reading to a sensor in MAINTENANCE status</td>
+    </tr>
+    <tr>
+        <td>500 Internal Server Error</td>
+        <td>Any unexpected server error (no stack trace is exposed)</td>
+    </tr>
+</table>
+
+<hr>
+<p>Use Postman or curl to test the API endpoints listed above.</p>
+
 </body>
 </html>
