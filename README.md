@@ -10,25 +10,29 @@
 
 ## API Design Overview
 
-GET /api/v1 - Discovery endpoint, returns metadata and resource links
+**Discovery**
+- `GET /api/v1` - Returns API metadata, version, and links to all resources
 
-GET /api/v1/rooms - List all campus rooms
-POST /api/v1/rooms - Create a new room (returns 201 with Location header)
-GET /api/v1/rooms/{roomId} - Get room details
-DELETE /api/v1/rooms/{roomId} - Delete room (blocked with 409 if sensors still linked)
+**Room Endpoints**
+- `GET /api/v1/rooms` - List all campus rooms
+- `POST /api/v1/rooms` - Create a new room (returns 201 + Location header)
+- `GET /api/v1/rooms/{roomId}` - Get a specific room by ID
+- `DELETE /api/v1/rooms/{roomId}` - Delete a room (blocked with 409 if sensors still linked)
 
-GET /api/v1/sensors - List sensors (optional ?type= filter)
-POST /api/v1/sensors - Register sensor (validates roomId, returns 422 if room missing)
-GET /api/v1/sensors/{sensorId} - Get sensor details
+**Sensor Endpoints**
+- `GET /api/v1/sensors` - List all sensors (use `?type=` to filter by type)
+- `POST /api/v1/sensors` - Register a new sensor (roomId must exist, else 422)
+- `GET /api/v1/sensors/{sensorId}` - Get a specific sensor by ID
 
-GET /api/v1/sensors/{sensorId}/readings - Get reading history
-POST /api/v1/sensors/{sensorId}/readings - Add new reading (blocked with 403 if MAINTENANCE)
+**Reading Endpoints**
+- `GET /api/v1/sensors/{sensorId}/readings` - Get reading history for a sensor
+- `POST /api/v1/sensors/{sensorId}/readings` - Add a new reading (blocked with 403 if MAINTENANCE)
 
-Business Constraints:
-- Room cannot be deleted if it still has sensors assigned (409 Conflict)
-- Sensor cannot be created with a roomId that does not exist (422 Unprocessable Entity)
-- New readings cannot be posted to a MAINTENANCE sensor (403 Forbidden)
-- Posting a reading updates the parent sensor currentValue automatically
+**Business Rules**
+- A room with active sensors cannot be deleted (409 Conflict)
+- A sensor must link to an existing room when created (422 Unprocessable Entity)
+- A sensor in MAINTENANCE status cannot receive new readings (403 Forbidden)
+- Posting a reading automatically updates the sensor's current value
 
 ---
 
@@ -43,14 +47,12 @@ cd smart-campus-api
 mvn jetty:run
 ```
 
-The API will start automatically on port 8080. Access it at:
+The API will start on port 8080. Open in browser or Postman:
 ```
 http://localhost:8080/smart-campus-api/api/v1
 ```
 
-To stop the server press `Ctrl + C`.
-
-> **Alternative:** If you prefer to deploy to a server manually, run `mvn clean package` and deploy `target/smart-campus-api.war` to any Tomcat 9 or GlassFish 5 instance.
+To stop: press `Ctrl + C`.
 
 ---
 
