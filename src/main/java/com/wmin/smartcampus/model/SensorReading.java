@@ -9,12 +9,12 @@ public class SensorReading {
     private String sensorId;
     private double value;
     private String unit;
-    private String timestamp;
+    private long   timestamp;
 
     public SensorReading() {}
 
     public SensorReading(String readingId, String sensorId,
-                         double value, String unit, String timestamp) {
+                         double value, String unit, long timestamp) {
         this.readingId = readingId;
         this.sensorId  = sensorId;
         this.value     = value;
@@ -30,6 +30,6 @@ public class SensorReading {
     public void   setValue(double v)          { this.value = v;    }
     public String getUnit()                   { return unit;       }
     public void   setUnit(String u)           { this.unit = u;     }
-    public String getTimestamp()              { return timestamp;  }
-    public void   setTimestamp(String ts)     { this.timestamp = ts; }
+    public long   getTimestamp()              { return timestamp;  }
+    public void   setTimestamp(long ts)       { this.timestamp = ts; }
 }

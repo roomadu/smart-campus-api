@@ -8,7 +8,6 @@ import com.wmin.smartcampus.model.SensorReading;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
-import java.time.Instant;
 import java.util.UUID;
 
 /**
@@ -60,10 +59,10 @@ public class SensorReadingResource {
             reading.setReadingId("RD-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase());
         }
         reading.setSensorId(sensorId);
-        if (reading.getTimestamp() == null || reading.getTimestamp().isBlank()) {
-            reading.setTimestamp(Instant.now().toString());
+        if (reading.getTimestamp() == 0) {
+            reading.setTimestamp(System.currentTimeMillis());
         }
-        if (reading.getUnit() == null || reading.getUnit().isBlank()) {
+        if (reading.getUnit() == null || reading.getUnit().isEmpty()) {
             reading.setUnit(sensor.getUnit());
         }
 
