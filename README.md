@@ -10,24 +10,25 @@
 
 ## API Design Overview
 
-| Endpoint | Method | Description |
-|---|---|---|
-| `/api/v1` | GET | Discovery - metadata, versioning & resource links |
-| `/api/v1/rooms` | GET | List all campus rooms |
-| `/api/v1/rooms` | POST | Create a new room (201 + Location header) |
-| `/api/v1/rooms/{roomId}` | GET | Get room details |
-| `/api/v1/rooms/{roomId}` | DELETE | Decommission room (blocked if sensors exist, 409) |
-| `/api/v1/sensors` | GET | List sensors (optional ?type= filter) |
-| `/api/v1/sensors` | POST | Register sensor (validates roomId, 422 if missing) |
-| `/api/v1/sensors/{sensorId}` | GET | Get sensor details |
-| `/api/v1/sensors/{sensorId}/readings` | GET | Reading history |
-| `/api/v1/sensors/{sensorId}/readings` | POST | Record new reading (blocked if MAINTENANCE, 403) |
+GET /api/v1 - Discovery endpoint, returns metadata and resource links
 
-**Business Constraints:**
-- Room deletion is blocked when sensors are still linked (409 Conflict)
-- Sensor creation validates the roomId exists (422 Unprocessable Entity)
-- Reading POST is blocked if sensor status is MAINTENANCE (403 Forbidden)
-- Successful reading POST updates parent sensor currentValue as a side-effect
+GET /api/v1/rooms - List all campus rooms
+POST /api/v1/rooms - Create a new room (returns 201 with Location header)
+GET /api/v1/rooms/{roomId} - Get room details
+DELETE /api/v1/rooms/{roomId} - Delete room (blocked with 409 if sensors still linked)
+
+GET /api/v1/sensors - List sensors (optional ?type= filter)
+POST /api/v1/sensors - Register sensor (validates roomId, returns 422 if room missing)
+GET /api/v1/sensors/{sensorId} - Get sensor details
+
+GET /api/v1/sensors/{sensorId}/readings - Get reading history
+POST /api/v1/sensors/{sensorId}/readings - Add new reading (blocked with 403 if MAINTENANCE)
+
+Business Constraints:
+- Room cannot be deleted if it still has sensors assigned (409 Conflict)
+- Sensor cannot be created with a roomId that does not exist (422 Unprocessable Entity)
+- New readings cannot be posted to a MAINTENANCE sensor (403 Forbidden)
+- Posting a reading updates the parent sensor currentValue automatically
 
 ---
 
