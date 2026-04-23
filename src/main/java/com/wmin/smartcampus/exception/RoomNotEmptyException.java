@@ -3,7 +3,7 @@ package com.wmin.smartcampus.exception;
 /**
  * Thrown when a client attempts to DELETE a Room that still has
  * active sensors linked to it.
- * Mapped → HTTP 409 Conflict
+ * Mapped to HTTP 409 Conflict
  */
 public class RoomNotEmptyException extends RuntimeException {
 

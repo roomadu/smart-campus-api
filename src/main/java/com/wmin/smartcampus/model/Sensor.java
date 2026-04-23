@@ -7,7 +7,7 @@ public class Sensor {
 
     private String sensorId;
     private String type;         // e.g. TEMPERATURE, CO2, HUMIDITY
-    private String roomId;       // FK → Room
+    private String roomId;       // linked room ID
     private String status;       // ACTIVE | MAINTENANCE
     private double currentValue;
     private String unit;

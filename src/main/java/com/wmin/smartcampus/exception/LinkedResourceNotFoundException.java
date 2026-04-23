@@ -2,7 +2,7 @@ package com.wmin.smartcampus.exception;
 
 /**
  * Thrown when a sensor POST references a roomId that does not exist.
- * Mapped → HTTP 422 Unprocessable Entity
+ * Mapped to HTTP 422 Unprocessable Entity
  */
 public class LinkedResourceNotFoundException extends RuntimeException {
 

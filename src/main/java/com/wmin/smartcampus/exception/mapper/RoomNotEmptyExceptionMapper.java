@@ -7,7 +7,7 @@ import javax.ws.rs.core.*;
 import javax.ws.rs.ext.*;
 
 /**
- * Maps RoomNotEmptyException → 409 Conflict with JSON body.
+ * Maps RoomNotEmptyException to 409 Conflict with JSON body.
  */
 @Provider
 public class RoomNotEmptyExceptionMapper implements ExceptionMapper<RoomNotEmptyException> {

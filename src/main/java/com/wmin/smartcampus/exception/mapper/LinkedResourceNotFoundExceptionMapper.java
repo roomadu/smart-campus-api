@@ -7,7 +7,7 @@ import javax.ws.rs.core.*;
 import javax.ws.rs.ext.*;
 
 /**
- * Maps LinkedResourceNotFoundException → 422 Unprocessable Entity.
+ * Maps LinkedResourceNotFoundException to 422 Unprocessable Entity.
  */
 @Provider
 public class LinkedResourceNotFoundExceptionMapper

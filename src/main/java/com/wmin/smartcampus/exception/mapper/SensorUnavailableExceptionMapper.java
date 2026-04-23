@@ -7,7 +7,7 @@ import javax.ws.rs.core.*;
 import javax.ws.rs.ext.*;
 
 /**
- * Maps SensorUnavailableException → 403 Forbidden.
+ * Maps SensorUnavailableException to 403 Forbidden.
  */
 @Provider
 public class SensorUnavailableExceptionMapper
